@@ -1,0 +1,31 @@
+{
+  "runId": "velqiris-live-6b5cfe79-49b9-4d97-a455-e178327d4a6f",
+  "query": "Zetaris market consensus MAD outlier risk regime",
+  "memories": [
+    {
+      "content": "Live Zetaris request ec8dccb5-65b6-4303-9e84-3225f38c9b44 executed a declared synthetic four-venue SQL scenario joining market_ticks with venue_telemetry and returned 4 rows.",
+      "source": "zetaris:ec8dccb5-65b6-4303-9e84-3225f38c9b44",
+      "type": "factual",
+      "layer": "working",
+      "confidence": 1.0,
+      "tags": [
+        "zetaris",
+        "live-query",
+        "market-integrity"
+      ]
+    },
+    {
+      "content": "VELQIRIS computed consensus VWAP 67450.6642 and rejected 1 MAD outlier from the live Zetaris result.",
+      "source": "velqiris:consensus:ec8dccb5-65b6-4303-9e84-3225f38c9b44",
+      "type": "factual",
+      "layer": "long_term",
+      "confidence": 1.0,
+      "tags": [
+        "meterless",
+        "hmem",
+        "mad",
+        "consensus"
+      ]
+    }
+  ]
+}

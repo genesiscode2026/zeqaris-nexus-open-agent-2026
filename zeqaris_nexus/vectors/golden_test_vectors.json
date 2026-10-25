@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ZEQARIS NEXUS Comprehensive Golden Test Vectors Suite",
+  "version": "1.4.0",
+  "specification": "ZEQARIS-JCS-1 (RFC 8785) & EIP-712 Settlement Voucher",
+  "unicode_jcs_vectors": {
+    "positive": [
+      {
+        "id": "JCS_POS_01_SURROGATE_PAIR_EMOJI",
+        "description": "Valid UTF-8 surrogate pair (emoji \ud83d\udc1d U+1F41D)",
+        "payload": "{\"status\":\"active\",\"symbol\":\"\ud83d\udc1d\"}",
+        "expected_canonical_bytes_hex": "7b22737461747573223a22616374697665222c2273796d626f6c223a22f09f909d227d"
+      },
+      {
+        "id": "JCS_POS_02_QUOTE_AND_BACKSLASH",
+        "description": "Escaped quotes and backslashes preserved under RFC 8785",
+        "payload": "{\"path\":\"C:\\\\secure\\\\vault\",\"quote\":\"\\\"verified\\\"\"}",
+        "expected_canonical_bytes_hex": "7b2270617468223a22433a5c5c7365637572655c5c7661756c74222c2271756f7465223a225c2276657269666965645c22227d"
+      },
+      {
+        "id": "JCS_POS_03_UTF16_KEY_ORDERING",
+        "description": "Key ordering strictly follows UTF-16 code units (RFC 8785 Section 3.2.3)",
+        "input_keys": [
+          "\u00e9",
+          "e",
+          "\ud83d\ude00",
+          "z"
+        ],
+        "expected_sorted_keys": [
+          "e",
+          "z",
+          "\u00e9",
+          "\ud83d\ude00"
+        ]
+      },
+      {
+        "id": "JCS_POS_04_NON_BMP_SURROGATE_UTF16_ORDER",
+        "description": "Non-BMP character U+1F600 (surrogate pair D83D DE00) sorts BEFORE BMP character U+E000 under UTF-16 code units",
+        "input_keys": [
+          "\ue000",
+          "\ud83d\ude00"
+        ],
+        "expected_sorted_keys": [
+          "\ud83d\ude00",
+          "\ue000"
+        ]
+      }
+    ],
+    "negative": [
+      {
+        "id": "JCS_NEG_01_FLOAT_FORBIDDEN",
+        "input": "{\"amount\":10.5}",
+        "expected_error": "Floating point numbers are forbidden in ZEQARIS-JCS-1 profile"
+      },
+      {
+        "id": "JCS_NEG_02_NEGATIVE_ZERO",
+        "input": "{\"nonce\":-0}",
+        "expected_error": "Negative zero is forbidden"
+      },
+      {
+        "id": "JCS_NEG_03_EXPONENT",
+        "input": "{\"budget\":1e6}",
+        "expected_error": "Exponents are forbidden in ZEQARIS-JCS-1 profile"
+      },
+      {
+        "id": "JCS_NEG_04_DUPLICATE_KEYS",
+        "input": "{\"key\":1,\"key\":2}",
+        "expected_error": "Duplicate keys rejected"
+      }
+    ]
+  },
+  "numeric_limit_vectors": {
+    "positive_decimal_strings": [
+      "0",
+      "1",
+      "18446744073709551615",
+      "18446744073709551616",
+      "340282366920938463463374607431768211455",
+      "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    ],
+    "negative_rejected_strings": [
+      "",
+      "+1",
+      "-1",
+      "01",
+      "00",
+      " 1",
+      "1 ",
+      "1.0",
+      "1e3",
+      "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+    ]
+  },
+  "merkle_vectors": {
+    "positive": [
+      {
+        "id": "MERKLE_POS_01_SINGLE_LEAF",
+        "leaf_account": "0x4444444444444444444444444444444444444444",
+        "cumulative_entitlement": 15000000,
+        "leaf_hash": "0xa43b40ecb7c44aadb1d98bd36ec108e05fa7b18650a8f645a6d66cd45bb7b929",
+        "merkle_root": "0xa43b40ecb7c44aadb1d98bd36ec108e05fa7b18650a8f645a6d66cd45bb7b929",
+        "proof": []
+      },
+      {
+        "id": "MERKLE_POS_02_TWO_LEAVES_TREE",
+        "leaf_account": "0x4444444444444444444444444444444444444444",
+        "cumulative_entitlement": 15000000,
+        "leaf_hash": "0xa43b40ecb7c44aadb1d98bd36ec108e05fa7b18650a8f645a6d66cd45bb7b929",
+        "merkle_root": "0x87e9cf456a819a6d83e67622a9e12ea8a3ee7475b2c2ae082b911bcd627cdb84",
+        "proof": [
+          "0x549d53591f465cf5f256ed6ff74fda7880806e770a7ad044b614a0aa15dac9cf"
+        ]
+      }
+    ],
+    "negative": [
+      {
+        "id": "MERKLE_NEG_01_MUTATED_PROOF_BIT",
+        "leaf_account": "0x4444444444444444444444444444444444444444",
+        "cumulative_entitlement": 15000000,
+        "merkle_root": "0x87e9cf456a819a6d83e67622a9e12ea8a3ee7475b2c2ae082b911bcd627cdb84",
+        "mutated_proof": [
+          "0x549d53591f465cf5f256ed6ff74fda7880806e770a7ad044b614a0aa15dac9ce"
+        ]
+      },
+      {
+        "id": "MERKLE_NEG_02_TRUNCATED_PROOF",
+        "leaf_account": "0x4444444444444444444444444444444444444444",
+        "cumulative_entitlement": 15000000,
+        "merkle_root": "0x87e9cf456a819a6d83e67622a9e12ea8a3ee7475b2c2ae082b911bcd627cdb84",
+        "mutated_proof": []
+      }
+    ]
+  },
+  "eip712_vectors": {
+    "positive": [
+      {
+        "id": "EIP712_POS_01_DOMAIN_SEPARATOR",
+        "name": "ZEQARIS NEXUS Settlement Engine",
+        "version": "1",
+        "chain_id": 84532,
+        "verifying_contract": "0x1111111111111111111111111111111111111111",
+        "expected_domain_separator": "0xa3b990f858e64be02b02d2ce6e107dec3ef94f0aca4a7b546be2e9282c8f9415"
+      },
+      {
+        "id": "EIP712_POS_02_VOUCHER_STRUCT_HASH",
+        "expected_struct_hash": "0x7d1034b29a332701a42d84c3c7dcbcb19c73505a3db059c05fb51fb5b63d4b9f"
+      },
+      {
+        "id": "EIP712_POS_03_FINAL_DIGEST",
+        "expected_digest": "0x47c915d60303e423f121bcc661c3da9610d5d8ade2a858b392b664a858cc4e03"
+      }
+    ]
+  },
+  "secp256k1_signature_vectors": {
+    "positive": [
+      {
+        "id": "SECP256K1_POS_01_VALID_SIGNATURE",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "event_hash": "0x7ed69073daefd9ea30549f744caabe6dff9a08b342b30509f4e2ce70a923dbea",
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_actor": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+        "expected_result": "PASS"
+      }
+    ],
+    "negative": [
+      {
+        "id": "SECP256K1_NEG_01_MUTATED_PAYLOAD",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xf3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_error": "ZEQARIS: ERR_ACTOR_SIGNATURE_MISMATCH"
+      },
+      {
+        "id": "SECP256K1_NEG_02_HIGH_S",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd173a7992dec68efccd837c50b557991cfcc81c613586ac1cc9243917b755fac41b11a",
+        "expected_error": "ZEQARIS: HIGH_S_SIGNATURE_FORBIDDEN"
+      },
+      {
+        "id": "SECP256K1_NEG_03_WRONG_ACTOR",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x1111111111111111111111111111111111111111",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_error": "ZEQARIS: ERR_ACTOR_SIGNATURE_MISMATCH"
+      },
+      {
+        "id": "SECP256K1_NEG_04_MUTATED_DIGEST",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "2",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_error": "ZEQARIS: ERR_ACTOR_SIGNATURE_MISMATCH"
+      },
+      {
+        "id": "SECP256K1_NEG_05_TRUNCATED_SIGNATURE",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff90",
+        "expected_error": "ZEQARIS: SIGNATURE_LENGTH_MUST_BE_65_BYTES_HEX130"
+      },
+      {
+        "id": "SECP256K1_NEG_06_REPLAY_DIFFERENT_SWARM",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-sepolia",
+          "swarmId": "0x9999000000000000000000000000000000000000000000000000000000009999",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_error": "ZEQARIS: ERR_ACTOR_SIGNATURE_MISMATCH"
+      },
+      {
+        "id": "SECP256K1_NEG_07_REPLAY_DIFFERENT_ENVIRONMENT",
+        "envelope": {
+          "protocolVersion": 1,
+          "schemaVersion": 1,
+          "environment": "base-mainnet",
+          "swarmId": "0x7a3f00000000000000000000000000000000000000000000000000000000b891",
+          "taskId": "task-001",
+          "actorId": "agent-alpha",
+          "actorKeyId": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23",
+          "sequence": "1",
+          "previousEventHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "eventType": "TASK_CREATED",
+          "canonicalPayloadHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "policyVersionHash": "0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "timestampLogical": "1729891200000",
+          "nonce": "0"
+        },
+        "signature": "0x13a074459dfe8b3e116b1b7661710b9e88fefe9eb1a60ddf780a5236c96fd1735866d21397103327c83af4aa866e303238e8c98e4486d3a97c40e3177089ff901b",
+        "expected_error": "ZEQARIS: ERR_ACTOR_SIGNATURE_MISMATCH"
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "created_at_utc": "2026-10-25T19:19:31.940969+00:00",
+  "run_id": "velqiris-live-6b5cfe79-49b9-4d97-a455-e178327d4a6f",
+  "status": "VERIFIED_LIVE_ZETARIS",
+  "platform": "Zetaris local Docker bundle 2.4.3",
+  "endpoint": "http://localhost:3000",
+  "connectivity_query": {
+    "success": true,
+    "request_id": "6b5cfe79-49b9-4d97-a455-e178327d4a6f",
+    "sql": "SELECT 7 AS seven",
+    "rows": [
+      {
+        "seven": "7"
+      }
+    ],
+    "row_count": 1,
+    "mode": "LIVE_ZETARIS",
+    "auth_mode": "LOCAL_SESSION",
+    "elapsed_ms": 1678.911,
+    "response_sha256": "7812f2a0364dffd3b96ddbe71ed820ece23199e021b2d4d028fdb6aaf40ef8f4"
+  },
+  "market_scenario": {
+    "data_classification": "DECLARED_SYNTHETIC_MULTI_RELATION_JOIN_EXECUTED_BY_LIVE_ZETARIS",
+    "logical_relations": [
+      "market_ticks",
+      "venue_telemetry"
+    ],
+    "join_key": "venue",
+    "claim_boundary": "This proves live Zetaris SQL execution of a join across two declared synthetic logical relations and subsequent VELQIRIS processing. It does not claim that the relations are independently onboarded external data sources or that they connect to production exchange feeds.",
+    "query_result": {
+      "success": true,
+      "request_id": "ec8dccb5-65b6-4303-9e84-3225f38c9b44",
+      "sql": "SELECT\n    market_ticks.venue,\n    market_ticks.pair,\n    market_ticks.bid,\n    market_ticks.ask,\n    market_ticks.volume,\n    venue_telemetry.latency_ms,\n    venue_telemetry.status\nFROM (\n    SELECT 'BINANCE' AS venue, 'BTC/USDC' AS pair, 67450.20 AS bid, 67451.10 AS ask, 142.5 AS volume\n    UNION ALL SELECT 'COINBASE', 'BTC/USDC', 67449.80, 67450.90, 98.2\n    UNION ALL SELECT 'OKX', 'BTC/USDC', 67450.50, 67451.40, 115.0\n    UNION ALL SELECT 'ANOMALY_DEX', 'BTC/USDC', 69120.00, 69150.00, 2.1\n) market_ticks\nINNER JOIN (\n    SELECT 'BINANCE' AS venue, 12 AS latency_ms, 'HEALTHY' AS status\n    UNION ALL SELECT 'COINBASE', 18, 'HEALTHY'\n    UNION ALL SELECT 'OKX', 15, 'HEALTHY'\n    UNION ALL SELECT 'ANOMALY_DEX', 120, 'DEGRADED'\n) venue_telemetry\nON market_ticks.venue = venue_telemetry.venue",
+      "rows": [
+        {
+          "latency_ms": "12",
+          "status": "HEALTHY",
+          "pair": "BTC/USDC",
+          "ask": "67451.10",
+          "bid": "67450.20",
+          "volume": "142.5",
+          "venue": "BINANCE"
+        },
+        {
+          "latency_ms": "18",
+          "status": "HEALTHY",
+          "pair": "BTC/USDC",
+          "ask": "67450.90",
+          "bid": "67449.80",
+          "volume": "98.2",
+          "venue": "COINBASE"
+        },
+        {
+          "latency_ms": "15",
+          "status": "HEALTHY",
+          "pair": "BTC/USDC",
+          "ask": "67451.40",
+          "bid": "67450.50",
+          "volume": "115.0",
+          "venue": "OKX"
+        },
+        {
+          "latency_ms": "120",
+          "status": "DEGRADED",
+          "pair": "BTC/USDC",
+          "ask": "69150.00",
+          "bid": "69120.00",
+          "volume": "2.1",
+          "venue": "ANOMALY_DEX"
+        }
+      ],
+      "row_count": 4,
+      "mode": "LIVE_ZETARIS",
+      "auth_mode": "LOCAL_SESSION",
+      "elapsed_ms": 8395.373,
+      "response_sha256": "5586f7d97154414c0a9d77416d24687433ec771acfeed67ca631203f31fec65a"
+    },
+    "velqiris_mad_consensus": {
+      "median_price": 67450.8,
+      "consensus_vwap": 67450.6642,
+      "mad": 0.3,
+      "mad_threshold": 67.4508,
+      "included_venues": [
+        {
+          "venue": "BINANCE",
+          "mid": 67450.65,
+          "volume": 142.5,
+          "latency_ms": 12.0,
+          "deviation": 0.14999999999417923
+        },
+        {
+          "venue": "COINBASE",
+          "mid": 67450.35,
+          "volume": 98.2,
+          "latency_ms": 18.0,
+          "deviation": 0.4499999999825377
+        },
+        {
+          "venue": "OKX",
+          "mid": 67450.95,
+          "volume": 115.0,
+          "latency_ms": 15.0,
+          "deviation": 0.15000000000873115
+        }
+      ],
+      "rejected_outliers": [
+        {
+          "venue": "ANOMALY_DEX",
+          "mid": 69135.0,
+          "volume": 2.1,
+          "latency_ms": 120.0,
+          "deviation": 1684.2000000000116,
+          "rejection_reason": "Price deviation (+1684.20) exceeds 3.0x MAD ceiling (67.45)"
+        }
+      ],
+      "spread_bps": 0.09,
+      "risk_regime": "CALM"
+    }
+  },
+  "model_execution": "NOT_INVOKED_IN_THIS_RECEIPT",
+  "secret_handling": "Credentials and session tokens were neither printed nor persisted."
+}

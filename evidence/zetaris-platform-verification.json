@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "verified_at_utc": "2026-10-25T18:36:35Z",
+  "status": "PASS",
+  "passed": 9,
+  "total": 9,
+  "bundle_version": "2.4.3",
+  "official_verifier": "zetaris-platform/verify.sh",
+  "checks": [
+    "postgres running and healthy",
+    "driver running and healthy",
+    "api running and healthy",
+    "ui running and healthy",
+    "init completed with exit 0",
+    "bootstrap completed with exit 0",
+    "ui /api/config returned HTTP 200",
+    "local administrator login returned a session token",
+    "query passed through ui -> api -> driver -> spark"
+  ],
+  "public_endpoint_scope": "localhost only",
+  "secret_handling": "No credential or session-token value is included in this receipt."
+}

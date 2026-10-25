@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "run_id": "velqiris-live-6b5cfe79-49b9-4d97-a455-e178327d4a6f",
+  "engine": "Meterless H-MEM official reference",
+  "engine_package": "@meterless/hmem-reference",
+  "engine_version": "0.1.0",
+  "upstream_repository": "https://github.com/Meterless/Meterless",
+  "upstream_commit": "1742dec56a66e58eef9dda2d2b865823758ca8cd",
+  "storage_mode": "LOCAL_PERSISTENT",
+  "stored_memory_ids": [
+    "mem-1",
+    "mem-2"
+  ],
+  "retrieved_memory_ids": [
+    "mem-2",
+    "mem-1"
+  ],
+  "retrieval_strategy": "comprehensive",
+  "retrieval_reason": "hybrid ranking for \"Zetaris market consensus MAD outlier risk regime\" (domain: general)",
+  "retrieval_scores": {
+    "mem-2": 0.4704,
+    "mem-1": 0.3108
+  },
+  "trust_ledger_entries": 4,
+  "trust_ledger_sha256": "0e30a89c169866402e8a80d909bf60a09d1d18454115d865267677b3d14d3702",
+  "persisted_files": [
+    "state.json",
+    "ledger.jsonl"
+  ],
+  "conformance_suite": "vendor/meterless-hmem-conformance/runner.ts",
+  "redaction_note": "No credentials, bearer tokens, passwords, or private account identifiers are included."
+}

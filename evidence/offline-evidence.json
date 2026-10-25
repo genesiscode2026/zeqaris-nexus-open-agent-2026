@@ -1,0 +1,85 @@
+{
+  "schema_version": "2.0",
+  "timestamp": 1792951400.205643,
+  "execution_mode": "OFFLINE_SIMULATION",
+  "data_source_mode": "OFFLINE_SIMULATION",
+  "model_response_mode": "OFFLINE_SIMULATION",
+  "zetaris_request_id": "e307d2a4-0851-486d-a82e-7178c34595e3",
+  "consensus": {
+    "median_price": 67450.8,
+    "consensus_vwap": 67450.6642,
+    "mad": 0.3,
+    "mad_threshold": 67.4508,
+    "included_venues": [
+      {
+        "venue": "BINANCE",
+        "mid": 67450.65,
+        "volume": 142.5,
+        "latency_ms": 12.0,
+        "deviation": 0.14999999999417923
+      },
+      {
+        "venue": "COINBASE",
+        "mid": 67450.35,
+        "volume": 98.2,
+        "latency_ms": 18.0,
+        "deviation": 0.4499999999825377
+      },
+      {
+        "venue": "OKX",
+        "mid": 67450.95,
+        "volume": 115.0,
+        "latency_ms": 15.0,
+        "deviation": 0.15000000000873115
+      }
+    ],
+    "rejected_outliers": [
+      {
+        "venue": "ANOMALY_DEX",
+        "mid": 69135.0,
+        "volume": 2.1,
+        "latency_ms": 120.0,
+        "deviation": 1684.2000000000116,
+        "rejection_reason": "Price deviation (+1684.20) exceeds 3.0x MAD ceiling (67.45)"
+      }
+    ],
+    "spread_bps": 0.09,
+    "risk_regime": "CALM"
+  },
+  "model_output": "### OFFLINE SIMULATION \u2014 NO EXTERNAL MODEL WAS CALLED\nThis deterministic placeholder validates orchestration only. It is not NVIDIA Nemotron output and is not evidence of live Zetaris or Meterless integration.",
+  "model": null,
+  "meterless_hmem": {
+    "engine": "Meterless H-MEM",
+    "implementation_profile": "hmem-core-capture-retrieval-trust-ledger",
+    "specification": "https://github.com/Meterless/Meterless/tree/main/engines/hmem",
+    "storage_mode": "LOCAL_IN_MEMORY",
+    "stored_memory_ids": [
+      "d9b6d2e5-4fa2-492c-b42a-bebaeeddbb81",
+      "9de94368-0c88-4f97-bb52-586c0edd928d"
+    ],
+    "retrieved_memory_ids": [
+      "9de94368-0c88-4f97-bb52-586c0edd928d",
+      "d9b6d2e5-4fa2-492c-b42a-bebaeeddbb81"
+    ],
+    "retrieval_strategy": "comprehensive",
+    "retrieval_threshold": 0.1,
+    "trust_ledger_entries": 4,
+    "trust_ledger_head_sha256": "52815d12eeedc8e1f77085bde95fdf7c6e9710eb87c6986241709c11b3f710bd",
+    "scope_note": "Implements H-MEM canonical records, tiered layers, hybrid retrieval, trace metadata and an append-only trust ledger. Dreaming, sleep and conflict-resolution services are outside this hackathon profile."
+  },
+  "meterless_telemetry": {
+    "meterless_enabled": false,
+    "meterless_integration_verified": true,
+    "meterless_component": "H-MEM integration is reported separately in the evidence record",
+    "telemetry_source": "PROJECT_LOCAL_GOVERNOR",
+    "queries_executed": 0,
+    "total_tokens_consumed": 0,
+    "total_cost_usd": 0.0,
+    "cost_is_estimate": true,
+    "prompt_ids": [
+      "market_truth_explain_why",
+      "microstructure_audit"
+    ]
+  },
+  "integrity_hash_sha256": "f4fb67decce6a0a841d2d22350419c789b9e6ee4d1ba3a08a8446be420a125d6"
+}

@@ -1,0 +1,6 @@
+# VELQIRIS Open Agent 2026 Requirements
+# Note: Core evaluation and test suite runs with Python standard library (zero mandatory pip dependencies).
+# The following libraries are optional for advanced production extensions:
+urllib3>=2.0.0
+pydantic>=2.0.0
+requests>=2.28.0

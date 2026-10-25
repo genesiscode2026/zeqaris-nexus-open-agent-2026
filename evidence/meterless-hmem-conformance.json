@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "verified_at_utc": "2026-10-25T18:35:57Z",
+  "status": "PASS",
+  "passed": 13,
+  "total": 13,
+  "engine": "Meterless H-MEM official reference",
+  "engine_package": "@meterless/hmem-reference",
+  "engine_version": "0.1.0",
+  "upstream_repository": "https://github.com/Meterless/Meterless",
+  "upstream_commit": "1742dec56a66e58eef9dda2d2b865823758ca8cd",
+  "suite": "vendor/meterless-hmem-conformance/runner.ts",
+  "implementation": "vendor/meterless-hmem-reference/src/index.ts",
+  "sections": {
+    "record-validation": "2/2",
+    "feedback-deltas": "5/5",
+    "ranking-order": "2/2",
+    "sleep-guardrails": "1/1",
+    "conflict-gate": "1/1",
+    "ledger-audit": "1/1",
+    "dream-boundary": "1/1"
+  }
+}

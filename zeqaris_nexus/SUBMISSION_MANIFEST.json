@@ -1,0 +1,53 @@
+{
+  "submission_metadata": {
+    "project_name": "ZEQARIS NEXUS",
+    "version": "1.4.1-rc1",
+    "release_status": "locally_verified_not_deployed",
+    "source_workspace_head": "f84b54d50500058ff72c81a242e0f61f9c9c2929",
+    "artifacts_present_in_source_commit": false,
+    "date": "2026-10-26"
+  },
+  "key_artifact_sha256": {
+    "solidity_escrow": "82112c5663e2e1ddb5c2ce9500dee7d25f66ad06aa6ad33c8373b17464a75ae2",
+    "foundry_unit_tests": "5c2fccafbbb99570ac8bbdab0c1a65c32a83e56d2b25b3c8dabdf94a06c9972d",
+    "foundry_invariants": "3112c75994529279db7e1100dab33b74f3d9666a37950f3806f3b667e73a4e4d",
+    "canister_lib": "0efe1e62ff8d174f2c5085a57812a82cca50f6f165470f771b0b0d0da7fee661",
+    "canister_state": "914fc90e9d21d3bdf4f22b5f0bda3263494a648742ca50db6217bf37c39da78d",
+    "canister_eip712": "f5edb6426636ec7bacf6c9c141051486b28b4f758b1e7e00fadbcbdbf1dbd097",
+    "golden_vectors": "ab65121d8540a42bf3de640d4c0831bbe754d39df3508b1da3c9cb694a54ad26"
+  },
+  "api_surface": {
+    "icp_canister": [
+      "verify_checkpoint_batch(BatchSubmission) -> Result<CheckpointReceipt, Text>",
+      "authorize_settlement(SettlementAuthorizationRequest) -> Result<SettlementAuthorizationResponse, Text>",
+      "prepare_settlement(SettlementAuthorizationRequest) -> Result<SettlementAuthorizationResponse, Text>",
+      "get_certified_checkpoint_witness() -> CertifiedCheckpointQuery"
+    ],
+    "evm_escrow": [
+      "submitSettlementVoucher(SettlementVoucher,bytes)",
+      "finalizeEpoch(uint256)",
+      "pauseEpoch(uint256,bytes32)",
+      "unpauseEpoch(uint256)",
+      "cancelEpoch(uint256,bytes32)",
+      "claim(address,uint256,uint256,bytes32[])",
+      "claimFor(address,uint256,uint256,bytes32[])",
+      "claimBatch(ClaimRequest[])",
+      "claimRoyalty()",
+      "triggerEmergencyPause(bytes32)",
+      "liftEmergencyPause(bytes32)",
+      "proposePublisherRotation(address)",
+      "executePublisherRotation()"
+    ]
+  },
+  "verification": {
+    "rust_tests": "9/9 pass",
+    "python_core_tests": "10/10 pass",
+    "golden_vectors": "40/40 pass",
+    "solidity_unit_tests": "9/9 pass",
+    "foundry_invariants": "500 runs; 128000 calls; 0 reverts",
+    "slither": "5 contracts; 102 detectors; no critical exploit finding",
+    "live_base_broadcast": false,
+    "live_icp_deployment": false,
+    "live_sponsor_receipts": false
+  }
+}
